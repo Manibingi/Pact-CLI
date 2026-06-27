@@ -1,64 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="
-         http://maven.apache.org/POM/4.0.0
-         http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>untitled</artifactId>
+    <groupId>com.citesting</groupId>
+    <artifactId>citesting</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <properties>
 
+
+    <properties>
         <maven.compiler.source>22</maven.compiler.source>
         <maven.compiler.target>22</maven.compiler.target>
-
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <restassured.version>5.5.6</restassured.version>
-        <junit.version>5.11.4</junit.version>
         <wiremock.version>3.13.2</wiremock.version>
-        <jackson.version>2.20.0</jackson.version>
-        <postgresql.version>42.7.7</postgresql.version>
-
-
         <pact.version>4.6.20</pact.version>
-        <pact.broker.url>http://localhost:9292</pact.broker.url>
+        <pact.broker.url>http://127.0.0.1:9292</pact.broker.url>
         <pact.publish.consumer.version>${project.version}</pact.publish.consumer.version>
         <pact.publish.consumer.branchName>local</pact.publish.consumer.branchName>
-        <git.sha>local</git.sha>
-        <pact.verifier.publishResults>false</pact.verifier.publishResults>
-        <pact.provider.branch>local</pact.provider.branch>
         <slf4j.version>2.0.17</slf4j.version>
-
+        <maven.surefire.version>3.5.6</maven.surefire.version>
+        <pact.verifier.publishResults>false</pact.verifier.publishResults>
+        <git.sha>local</git.sha>
+        <pact.provider.branch>local</pact.provider.branch>
     </properties>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>2.22.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
 
-        <!-- REST Assured -->
+
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
-            <version>${restassured.version}</version>
+            <version>6.0.0</version>
             <scope>test</scope>
+            <!-- Prevent old Jackson coming in -->
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
-        <!-- JSON Schema Validation -->
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>json-schema-validator</artifactId>
-            <version>${restassured.version}</version>
-            <scope>test</scope>
-        </dependency>
 
-        <!-- JUnit 5 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>${junit.version}</version>
+            <version>5.11.4</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.17</version>
             <scope>test</scope>
         </dependency>
 
@@ -67,6 +76,77 @@
             <artifactId>wiremock</artifactId>
             <version>${wiremock.version}</version>
             <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.7</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.4.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>6.0.0</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>1.21.3</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <version>1.21.3</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>1.21.3</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.17</version>
         </dependency>
 
         <dependency>
@@ -83,75 +163,22 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>2.0.17</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Jackson -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <version>8.4.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.github.cdimascio</groupId>
-            <artifactId>dotenv-java</artifactId>
-            <version>3.2.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>1.21.3</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>mysql</artifactId>
-            <version>1.21.3</version>
-            <scope>test</scope>
-        </dependency>
-
-
     </dependencies>
 
     <build>
-
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-
-                <artifactId>
-                    maven-compiler-plugin
-                </artifactId>
-
-                <version>3.14.0</version>
-
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.6</version>
                 <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
+                    <systemPropertyVariables>
+                        <pact.verifier.publishResults>true</pact.verifier.publishResults>
+                        <pact.provider.version>${git.sha}</pact.provider.version>
+                        <pact.provider.branch>main</pact.provider.branch>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>au.com.dius.pact.provider</groupId>
                 <artifactId>maven</artifactId>
@@ -161,34 +188,10 @@
                     <pactBrokerUrl>${pact.broker.url}</pactBrokerUrl>
                     <projectVersion>${pact.publish.consumer.version}</projectVersion>
                     <branchName>${pact.publish.consumer.branchName}</branchName>
-                    <tags>
-                        <tag>week4</tag>
-                    </tags>
+                    <tags><tag>week4</tag></tags>
                 </configuration>
             </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-
-                <artifactId>
-                    maven-surefire-plugin
-                </artifactId>
-
-                <version>3.5.6</version>
-
-                <configuration>
-                    <useModulePath>false</useModulePath>
-                    <systemPropertyVariables>
-                        <pact_do_not_track>true</pact_do_not_track>
-                        <pact.verifier.publishResults>${pact.verifier.publishResults}</pact.verifier.publishResults>
-                        <pact.provider.version>${git.sha}</pact.provider.version>
-                        <pact.provider.branch>${pact.provider.branch}</pact.provider.branch>
-                    </systemPropertyVariables>
-                </configuration>
-            </plugin>
-
         </plugins>
-
     </build>
 
 </project>
