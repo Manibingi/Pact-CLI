@@ -18,10 +18,10 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import com.citesting.contract.pos.OmsClient.Order;
+import com.ust.sdet.api.pos.OmsClient.Order;
 
 import static io.restassured.RestAssured.given;
-import static com.citesting.contract.pos.OmsClient.Order;
+import static com.ust.sdet.api.pos.OmsClient.Order;
 
 @ExtendWith(PactConsumerTestExt.class)
 
