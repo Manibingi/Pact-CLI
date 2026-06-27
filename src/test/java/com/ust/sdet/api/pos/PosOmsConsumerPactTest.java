@@ -21,7 +21,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import com.ust.sdet.api.pos.OmsClient.Order;
 
 import static io.restassured.RestAssured.given;
-import static com.ust.sdet.api.pos.OmsClient.Order;
+//import static com.ust.sdet.api.pos.OmsClient.Order;
 
 @ExtendWith(PactConsumerTestExt.class)
 
